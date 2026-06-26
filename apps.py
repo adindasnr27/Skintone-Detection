@@ -8,7 +8,6 @@ import matplotlib.patches as mpatches
 import seaborn as sns
 import os
 import io
-import base64
 from streamlit_option_menu import option_menu
 
 # ─────────────────────────────────────────
@@ -104,35 +103,6 @@ st.markdown("""
     opacity: 0.8;
     font-weight: 300 !important;
     letter-spacing: 2px;
-}
-
-/* Menu Styling */
-.nav-menu {
-    background: rgba(255,255,255,0.5) !important;
-    backdrop-filter: blur(10px);
-    border-radius: 16px !important;
-    padding: 8px !important;
-    border: 1px solid rgba(233,30,99,0.15);
-}
-
-.nav-menu .nav-link {
-    border-radius: 12px !important;
-    font-family: 'DM Sans', sans-serif !important;
-    font-weight: 500 !important;
-    transition: all 0.3s ease !important;
-    padding: 10px 16px !important;
-    margin: 4px 0 !important;
-}
-
-.nav-menu .nav-link:hover {
-    background: rgba(233,30,99,0.1) !important;
-    transform: translateX(5px);
-}
-
-.nav-menu .nav-link.active {
-    background: linear-gradient(135deg, #EC407A, #D81B60) !important;
-    color: white !important;
-    box-shadow: 0 4px 15px rgba(233,30,99,0.3);
 }
 
 /* Typography */
@@ -290,30 +260,25 @@ p, li, label, div {
 }
 
 /* Badge - Cute */
-.badge-cute {
+.badge-ok {
     display: inline-block;
+    background: linear-gradient(135deg, #E8F5E9, #C8E6C9);
+    color: #2E7D32;
     border-radius: 50px;
     padding: 5px 16px;
     font-size: 0.82rem;
     font-weight: 600;
-    font-family: 'DM Sans', sans-serif;
-    letter-spacing: 0.5px;
-    transition: all 0.3s ease;
-}
-
-.badge-cute:hover {
-    transform: scale(1.05);
-}
-
-.badge-ok {
-    background: linear-gradient(135deg, #E8F5E9, #C8E6C9);
-    color: #2E7D32;
     border: 1px solid #A5D6A7;
 }
 
 .badge-warn {
+    display: inline-block;
     background: linear-gradient(135deg, #FFF3E0, #FFE0B2);
     color: #E65100;
+    border-radius: 50px;
+    padding: 5px 16px;
+    font-size: 0.82rem;
+    font-weight: 600;
     border: 1px solid #FFCC80;
 }
 
@@ -363,17 +328,11 @@ p, li, label, div {
     margin-bottom: 14px;
     box-shadow: 0 4px 20px rgba(233,30,99,0.06);
     transition: all 0.3s ease;
-    position: relative;
 }
 
 .rec-card-glam:hover {
     transform: translateX(5px);
     box-shadow: 0 6px 30px rgba(233,30,99,0.12);
-}
-
-.rec-card-glam .icon {
-    font-size: 1.5rem;
-    margin-right: 10px;
 }
 
 /* Validation */
@@ -406,69 +365,10 @@ p, li, label, div {
     box-shadow: 0 4px 20px rgba(233,30,99,0.06);
 }
 
-/* Tips section */
-.tips-section {
-    background: linear-gradient(135deg, rgba(252,228,236,0.4), rgba(255,255,255,0.6));
-    border-radius: 16px;
-    padding: 20px 24px;
-    border: 1px solid rgba(233,30,99,0.1);
-    margin-top: 16px;
-}
-
-/* Shade dots with glow */
-.shade-dot {
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    margin: 0 auto 8px;
-    border: 3px solid rgba(233,30,99,0.2);
-    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-    transition: all 0.3s ease;
-    position: relative;
-}
-
-.shade-dot:hover {
-    transform: scale(1.15) rotate(-5deg);
-    box-shadow: 0 8px 30px rgba(0,0,0,0.15);
-    border-color: #EC407A;
-}
-
-/* Divider with hearts */
-.custom-divider {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 15px;
-    margin: 30px 0;
-    color: #EC407A;
-    opacity: 0.5;
-}
-
-.custom-divider::before,
-.custom-divider::after {
-    content: "🌸";
-    font-size: 1.2rem;
-}
-
 /* Status messages */
 .stAlert {
     border-radius: 16px !important;
     border-left: 5px solid !important;
-}
-
-.stSuccess {
-    background: linear-gradient(135deg, #E8F5E9, #C8E6C9) !important;
-    border-left-color: #2E7D32 !important;
-}
-
-.stWarning {
-    background: linear-gradient(135deg, #FFF3E0, #FFE0B2) !important;
-    border-left-color: #E65100 !important;
-}
-
-.stInfo {
-    background: linear-gradient(135deg, #E3F2FD, #BBDEFB) !important;
-    border-left-color: #1565C0 !important;
 }
 
 /* Image hover */
@@ -547,11 +447,6 @@ def check_image_quality(pil_img: Image.Image):
         "light_status": light_status, "light_msg": light_msg,
         "face_status": face_status, "face_msg": face_msg,
     }
-
-def validate_image(pil_img: Image.Image):
-    quality = check_image_quality(pil_img)
-    is_valid = (quality["light_status"] == "ok" and quality["face_status"] == "ok")
-    return is_valid, quality
 
 # ─────────────────────────────────────────
 # SESSION STATE
@@ -856,4 +751,49 @@ elif page == "Beauty Recommendation":
         """, unsafe_allow_html=True)
 
         st.markdown(f"""
-        <div class="rec-card
+        <div class="rec-card-glam">
+            <div style="display:flex;align-items:center;gap:10px;margin-bottom:4px;">
+                <span style="font-size:1.2rem;">🧴</span>
+                <span style="font-size:0.78rem;text-transform:uppercase;letter-spacing:1px;color:#6A1B3D;font-weight:600;">Skincare Recommendation</span>
+            </div>
+            <p style="font-size:1.05rem;font-weight:500;color:#3D1A2B;margin:0;">{rec['skincare']}</p>
+        </div>
+        """, unsafe_allow_html=True)
+
+        st.markdown(f"""
+        <div class="rec-card-glam" style="border-left-color:#F48FB1;">
+            <div style="display:flex;align-items:center;gap:10px;margin-bottom:4px;">
+                <span style="font-size:1.2rem;">💡</span>
+                <span style="font-size:0.78rem;text-transform:uppercase;letter-spacing:1px;color:#6A1B3D;font-weight:600;">Beauty Tip</span>
+            </div>
+            <p style="font-size:0.95rem;color:#3D1A2B;margin:0;">{rec['tip']}</p>
+        </div>
+        """, unsafe_allow_html=True)
+
+        st.caption("💖 Rekomendasi berdasarkan prediksi AI. Lakukan swatching sebelum membeli.")
+
+    # G2G Shade Reference
+    st.markdown("---")
+    st.markdown("#### 🎨 All G2G Shades")
+    shades = [
+        ("00", "Allegato", "#F5D5B0"),
+        ("01", "Buttercream", "#F2C89A"),
+        ("02", "Praline", "#D4A278"),
+        ("03", "Cookies", "#C49060"),
+        ("04", "Ginger", "#B07848"),
+        ("05", "Cinnamon", "#8B5E3C"),
+    ]
+    cols = st.columns(6)
+    for col, (code, name, color) in zip(cols, shades):
+        with col:
+            st.markdown(f"""
+            <div style="text-align:center;">
+                <div style="width:60px;height:60px;border-radius:50%;background:{color};
+                            margin:0 auto 8px;border:3px solid rgba(233,30,99,0.2);
+                            box-shadow:0 4px 20px rgba(0,0,0,0.08);
+                            transition:all 0.3s ease;">
+                </div>
+                <p style="font-size:0.7rem;font-weight:700;color:#D81B60;margin:0;">{code}</p>
+                <p style="font-size:0.72rem;color:#6A1B3D;margin:0;">{name}</p>
+            </div>
+            """, unsafe_allow_html=True)
