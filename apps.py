@@ -53,16 +53,6 @@ st.markdown("""
     background-attachment: fixed;
 }
 
-/* Floating decorations */
-.floating-deco {
-    position: fixed;
-    font-size: 2rem;
-    opacity: 0.3;
-    pointer-events: none;
-    animation: float 3s ease-in-out infinite;
-    z-index: 0;
-}
-
 /* Sidebar - Glamour */
 [data-testid="stSidebar"] {
     background: linear-gradient(160deg, #FCE4EC 0%, #F8BBD0 40%, #F48FB1 100%);
@@ -441,17 +431,6 @@ p, li, label, div {
     transform: scale(1.15) rotate(-5deg);
     box-shadow: 0 8px 30px rgba(0,0,0,0.15);
     border-color: #EC407A;
-}
-
-.shade-dot .glow {
-    position: absolute;
-    top: -5px;
-    left: -5px;
-    right: -5px;
-    bottom: -5px;
-    border-radius: 50%;
-    background: radial-gradient(circle, rgba(233,30,99,0.1), transparent);
-    animation: sparkle 2s ease-in-out infinite;
 }
 
 /* Divider with hearts */
@@ -864,5 +843,17 @@ elif page == "Beauty Recommendation":
         """, unsafe_allow_html=True)
 
     with col_rec:
+        st.markdown(f"### 💖 Your Perfect Match")
+        
         st.markdown(f"""
-        <div style="background:linear-gradient(135deg,rgba(252,228,236,0.5),rg
+        <div class="rec-card-glam">
+            <div style="display:flex;align-items:center;gap:10px;margin-bottom:4px;">
+                <span style="font-size:1.2rem;">💄</span>
+                <span style="font-size:0.78rem;text-transform:uppercase;letter-spacing:1px;color:#6A1B3D;font-weight:600;">G2G Foundation Shade</span>
+            </div>
+            <p style="font-size:1.3rem;font-weight:700;color:#D81B60;margin:0;">{rec['shades']}</p>
+        </div>
+        """, unsafe_allow_html=True)
+
+        st.markdown(f"""
+        <div class="rec-card-glam"
