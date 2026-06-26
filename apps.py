@@ -856,4 +856,4 @@ elif page == "Beauty Recommendation":
         """, unsafe_allow_html=True)
 
         st.markdown(f"""
-        <div class="rec-card-glam"
+        <div class="rec-card
